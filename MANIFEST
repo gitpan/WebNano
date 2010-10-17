@@ -118,4 +118,3 @@ t/release-kwalitee.t
 t/release-pod-coverage.t
 t/release-pod-syntax.t
 t/renderer.t
-t/tmp/dvdzbr.db

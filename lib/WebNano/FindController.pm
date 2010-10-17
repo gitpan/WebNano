@@ -41,7 +41,7 @@ WebNano::FindController - Tool for finding controller classes
 
 =head1 VERSION
 
-version 0.001
+version 0.002
 
 =head2 find_nested
 

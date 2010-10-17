@@ -18,6 +18,11 @@ meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
 name: WebNano
+no_index:
+  directory:
+    - t/lib
+    - examples
+    - extensions
 requires:
   Encode: 0
   Exporter: 0
@@ -31,4 +36,4 @@ requires:
   URI::Escape: 0
 resources:
   repository: http://github.com/zby/WebNano
-version: 0.001
+version: 0.002

@@ -13,6 +13,13 @@
       "version" : "2"
    },
    "name" : "WebNano",
+   "no_index" : {
+      "directory" : [
+         "t/lib",
+         "examples",
+         "extensions"
+      ]
+   },
    "prereqs" : {
       "configure" : {
          "requires" : {
@@ -51,6 +58,6 @@
          "web" : "http://github.com/zby/WebNano"
       }
    },
-   "version" : "0.001"
+   "version" : "0.002"
 }
 

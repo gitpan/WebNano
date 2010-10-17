@@ -98,7 +98,7 @@ WebNano::Renderer::TTiny - Dynamic search paths for Template::Tiny
 
 =head1 VERSION
 
-version 0.001
+version 0.002
 
 =head1 SYNOPSIS
 
