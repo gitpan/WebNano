@@ -1,0 +1,13 @@
+
+
+This archive contains the distribution WebNano,
+version 0.001:
+
+  A minimalistic PSGI based web framework.
+
+This software is copyright (c) 2010 by Zbigniew Lukasiak <zby@cpan.org>.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+
