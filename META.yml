@@ -12,8 +12,8 @@ build_requires:
 configure_requires:
   ExtUtils::MakeMaker: 6.31
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.102341, CPAN::Meta::Converter version 2.102400'
-license: perl
+generated_by: 'Dist::Zilla version 4.102345, CPAN::Meta::Converter version 2.102160'
+license: artistic_2
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
@@ -24,6 +24,7 @@ no_index:
     - examples
     - extensions
 requires:
+  Class::Load: 0
   Encode: 0
   Exporter: 0
   File::Spec: 0
@@ -32,8 +33,7 @@ requires:
   Plack::Response: 0
   Scalar::Util: 0
   Template::Tiny: 0
-  Try::Tiny: 0
   URI::Escape: 0
 resources:
   repository: http://github.com/zby/WebNano
-version: 0.002
+version: 0.003

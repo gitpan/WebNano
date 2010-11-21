@@ -7,8 +7,8 @@ META.yml
 Makefile.PL
 README
 README.predzil
-app.psgi
 dist.ini
+examples/DvdDatabase/a.pl
 examples/DvdDatabase/app.conf
 examples/DvdDatabase/app.psgi
 examples/DvdDatabase/dist.ini
@@ -55,10 +55,8 @@ examples/DvdDatabase/templates/DvdSimpleUrl/list.tt
 examples/DvdDatabase/templates/DvdSimpleUrl/view.tt
 examples/myapp/MyApp.pm
 examples/myapp/MyApp/Controller.pm
-examples/myapp/MyApp/Controller/Przyklad.pm
 examples/myapp/README
 examples/myapp/app.psgi
-examples/myapp/templates/Przyklad/templated
 examples/myapp/templates/templated
 extensions/WebNano-Controller-DSL/dist.ini
 extensions/WebNano-Controller-DSL/lib/WebNano/Controller/DSL.pm
@@ -87,7 +85,6 @@ t/00.load.t
 t/10.main.t
 t/11.subclass.t
 t/app.psgi
-t/code_attrs.pm
 t/data/subclassapp_templates/NestedController2/some_template
 t/data/templates/Book/some
 t/data/templates/Book/third_template
@@ -95,6 +92,7 @@ t/data/templates/NestedController/some_template
 t/data/templates/NestedController2/some_template
 t/data/templates/Product/another_template
 t/data/templates/Product/third_template
+t/data/templates/ToBeOverridden/templated
 t/data/templates/aaa
 t/data/templates/dummy_template
 t/data/templates/index.tt
@@ -111,10 +109,13 @@ t/lib/MyApp/Controller/NestedController.pm
 t/lib/MyApp/Controller/NestedController2.pm
 t/lib/MyApp/Controller/Product.pm
 t/lib/MyApp/Controller/ThisIsNotController.pm
+t/lib/MyApp/Controller/ToBeOverridden.pm
 t/lib/SubClassApp.pm
+t/lib/SubClassApp/Controller/ToBeOverridden.pm
 t/onefile.t
 t/pod.t
 t/release-kwalitee.t
 t/release-pod-coverage.t
 t/release-pod-syntax.t
 t/renderer.t
+t/subclass.psgi

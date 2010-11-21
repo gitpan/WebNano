@@ -2,6 +2,9 @@ use strict;
 use warnings;
 
 package WebNano::DirController;
+BEGIN {
+  $WebNano::DirController::VERSION = '0.003';
+}
 use WebNano::FindController 'find_nested';
 use base 'WebNano::Controller';
 
@@ -19,11 +22,13 @@ sub handle {
     my $self = $class->new( %args );
     my $out = $self->local_dispatch( $path );
     return $out if $out;
+    warn "No local action found in $class\n" if $self->DEBUG;
     my( $path_part, $new_path ) = ( $path =~ qr{^([^/]*)/?(.*)} );
     $path_part =~ s/::|'//g if defined( $path_part );
     return if !length( $path_part );
     my $controller_class = find_nested( $class->_self_path . $path_part, $args{app}->controller_search_path );
     return if !$controller_class;
+    warn "Dispatching to $controller_class\n" if $self->DEBUG;
     return $controller_class->handle(
         %args,
         path => $new_path,  
@@ -36,6 +41,10 @@ sub handle {
 
 
 
+
+
+
+
 =pod
 
 =head1 NAME
@@ -44,7 +53,7 @@ WebNano::DirController - WebNano controller class for root
 
 =head1 VERSION
 
-version 0.002
+version 0.003
 
 =head1 SYNOPSIS
 
@@ -63,6 +72,14 @@ If there is no suitable method in the current class, child controller classes
 are tried out.  If there is found one that matches the path part then it is
 instantiated with the current psgi env and it's handle method is called.
 
+=head1 NAME
+
+WebNano::DirController - WebNano controller class for root
+
+=head1 VERSION
+
+version 0.002
+
 =head1 METHODS
 
 =head2 handle
@@ -77,6 +94,18 @@ This software is copyright (c) 2010 by Zbigniew Lukasiak <zby@cpan.org>.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
+
+=head1 AUTHOR
+
+Zbigniew Lukasiak <zby@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is Copyright (c) 2010 by Zbigniew Lukasiak <zby@cpan.org>.
+
+This is free software, licensed under:
+
+  The Artistic License 2.0
 
 =cut
 

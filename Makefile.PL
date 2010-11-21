@@ -24,9 +24,10 @@ my %WriteMakefileArgs = (
   },
   'DISTNAME' => 'WebNano',
   'EXE_FILES' => [],
-  'LICENSE' => 'perl',
+  'LICENSE' => 'artistic_2',
   'NAME' => 'WebNano',
   'PREREQ_PM' => {
+    'Class::Load' => '0',
     'Encode' => '0',
     'Exporter' => '0',
     'File::Spec' => '0',
@@ -35,10 +36,9 @@ my %WriteMakefileArgs = (
     'Plack::Response' => '0',
     'Scalar::Util' => '0',
     'Template::Tiny' => '0',
-    'Try::Tiny' => '0',
     'URI::Escape' => '0'
   },
-  'VERSION' => '0.002',
+  'VERSION' => '0.003',
   'test' => {
     'TESTS' => 't/*.t'
   }

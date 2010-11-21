@@ -2,12 +2,16 @@ use strict;
 use warnings;
 
 package WebNano::Controller;
+BEGIN {
+  $WebNano::Controller::VERSION = '0.003';
+}
 
-use Try::Tiny;
 use URI::Escape 'uri_unescape';
 use Plack::Request;
 
 use Object::Tiny::RW  qw/ app env self_url url_map _req /;
+
+sub DEBUG { shift->app->DEBUG }
 
 sub req { 
     my $self = shift;
@@ -63,7 +67,7 @@ WebNano::Controller - WebNano Controller
 
 =head1 VERSION
 
-version 0.002
+version 0.003
 
 =head1 DESCRIPTION
 
@@ -118,6 +122,11 @@ Plack::Reqest made from env
 
 =head2 template_search_path
 
+=head2 DEBUG
+
+By default returns the DEBUG flag from the application.  When this returns C<true> then
+some additional logging is directed to STDOUT.
+
 =head1 ATTRIBUTES
 
 =head2 url_map
@@ -140,10 +149,11 @@ Zbigniew Lukasiak <zby@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2010 by Zbigniew Lukasiak <zby@cpan.org>.
+This software is Copyright (c) 2010 by Zbigniew Lukasiak <zby@cpan.org>.
 
-This is free software; you can redistribute it and/or modify it under
-the same terms as the Perl 5 programming language system itself.
+This is free software, licensed under:
+
+  The Artistic License 2.0
 
 =cut
 

@@ -2,13 +2,15 @@ use strict;
 use warnings;
 
 package WebNano;
+BEGIN {
+  $WebNano::VERSION = '0.003';
+}
 
 use WebNano::FindController 'find_nested';
 
-our $VERSION = '0.001';
 use Plack::Response;
 use Scalar::Util qw(blessed);
-use Object::Tiny::RW 'renderer';
+use Object::Tiny::RW qw( renderer DEBUG );
 use Encode;
 
 sub psgi_callback {
@@ -65,7 +67,7 @@ WebNano - A minimalistic PSGI based web framework.
 
 =head1 VERSION
 
-version 0.002
+version 0.003
 
 =head1 SYNOPSIS
 
@@ -75,6 +77,7 @@ app.psgi file like this:
     {
         package MyApp;
         use base 'WebNano';
+        1;
     }
     
     {
@@ -85,6 +88,7 @@ app.psgi file like this:
             my $self = shift;
             return 'This is my home';
         }
+        1;
     }
     
     my $app = MyApp->new();
@@ -304,6 +308,10 @@ Nearly every web application uses some templating engine - this is the
 attribute to keep the templating engine object.  It is not mandatory that you
 follow this rule.
 
+=head2 DEBUG
+
+If set prints out some debugging information to stdout.
+
 =head1 DIAGNOSTICS
 
 =for author to fill in:
@@ -342,10 +350,11 @@ Zbigniew Lukasiak <zby@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2010 by Zbigniew Lukasiak <zby@cpan.org>.
+This software is Copyright (c) 2010 by Zbigniew Lukasiak <zby@cpan.org>.
 
-This is free software; you can redistribute it and/or modify it under
-the same terms as the Perl 5 programming language system itself.
+This is free software, licensed under:
+
+  The Artistic License 2.0
 
 =cut
 

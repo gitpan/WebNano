@@ -2,11 +2,14 @@ use strict;
 use warnings;
 
 package WebNano::FindController;
+BEGIN {
+  $WebNano::FindController::VERSION = '0.003';
+}
 
 use Exporter 'import';
 our @EXPORT_OK = qw(find_nested); 
 
-use Try::Tiny;
+use Class::Load 'try_load_class';
 
 sub find_nested {
     my( $sub_path, $search_path ) = @_;
@@ -15,13 +18,12 @@ sub find_nested {
     my @path = @$search_path;
     for my $base ( @path ){
         my $controller_class = $base . '::Controller' . $sub_path;
-        eval "require $controller_class";
-        if( $@ ){
+        if( ! try_load_class( $controller_class ) ){
             my $file = $controller_class;
             $file =~ s{::}{/}g;
             $file .= '.pm';
-            if( $@ !~ /Can't locate \Q$file\E in \@INC/ ){
-                die $@;
+            if( $Class::Load::ERROR !~ /Can't locate \Q$file\E in \@INC/ ){
+                die $Class::Load::ERROR;
             }
         };
         return $controller_class if $controller_class->isa( 'WebNano::Controller' );
@@ -41,7 +43,7 @@ WebNano::FindController - Tool for finding controller classes
 
 =head1 VERSION
 
-version 0.002
+version 0.003
 
 =head2 find_nested
 
@@ -51,10 +53,11 @@ Zbigniew Lukasiak <zby@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2010 by Zbigniew Lukasiak <zby@cpan.org>.
+This software is Copyright (c) 2010 by Zbigniew Lukasiak <zby@cpan.org>.
 
-This is free software; you can redistribute it and/or modify it under
-the same terms as the Perl 5 programming language system itself.
+This is free software, licensed under:
+
+  The Artistic License 2.0
 
 =cut
 
