@@ -36,4 +36,4 @@ requires:
   URI::Escape: 0
 resources:
   repository: http://github.com/zby/WebNano
-version: 0.003
+version: 0.004

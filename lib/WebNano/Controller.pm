@@ -3,7 +3,7 @@ use warnings;
 
 package WebNano::Controller;
 BEGIN {
-  $WebNano::Controller::VERSION = '0.003';
+  $WebNano::Controller::VERSION = '0.004';
 }
 
 use URI::Escape 'uri_unescape';
@@ -44,8 +44,12 @@ sub local_dispatch {
     }
     my $method = $name . '_action';
     $action = $self->can( $method ) if !$action;
-    return if !$action;
-    return $action->( $self, @args, @parts );
+    my $out;
+    if( $action ){
+        $out = $action->( $self, @args, @parts );
+    }
+    warn 'No local action found in "' . ref($self) . qq{" for "$name"\n} if !defined( $out ) && $self->DEBUG;
+    return $out;
 }
 
 sub handle {
@@ -67,7 +71,7 @@ WebNano::Controller - WebNano Controller
 
 =head1 VERSION
 
-version 0.003
+version 0.004
 
 =head1 DESCRIPTION
 
