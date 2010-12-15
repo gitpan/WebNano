@@ -7,8 +7,9 @@ META.yml
 Makefile.PL
 README
 README.predzil
+WebNano_Doc_Cleanup.diff
+app.psgi
 dist.ini
-examples/DvdDatabase/a.pl
 examples/DvdDatabase/app.conf
 examples/DvdDatabase/app.psgi
 examples/DvdDatabase/dist.ini
@@ -55,8 +56,10 @@ examples/DvdDatabase/templates/DvdSimpleUrl/list.tt
 examples/DvdDatabase/templates/DvdSimpleUrl/view.tt
 examples/myapp/MyApp.pm
 examples/myapp/MyApp/Controller.pm
+examples/myapp/MyApp/Controller/Przyklad.pm
 examples/myapp/README
 examples/myapp/app.psgi
+examples/myapp/templates/Przyklad/templated
 examples/myapp/templates/templated
 extensions/WebNano-Controller-DSL/dist.ini
 extensions/WebNano-Controller-DSL/lib/WebNano/Controller/DSL.pm
@@ -77,6 +80,8 @@ extensions/WebNano-Controller-WithAttributes/t/lib/MyApp/Controller/WithAttribut
 extensions/WebNano-Controller-WithAttributes/t/pod.t
 extensions/WebNano-Controller-WithAttributes/t/with_attributes.t
 lib/WebNano.pm
+lib/WebNano.pm.orig
+lib/WebNano.pm.rej
 lib/WebNano/Controller.pm
 lib/WebNano/DirController.pm
 lib/WebNano/FindController.pm
@@ -85,6 +90,7 @@ t/00.load.t
 t/10.main.t
 t/11.subclass.t
 t/app.psgi
+t/code_attrs.pm
 t/data/subclassapp_templates/NestedController2/some_template
 t/data/templates/Book/some
 t/data/templates/Book/third_template
@@ -119,3 +125,4 @@ t/release-pod-coverage.t
 t/release-pod-syntax.t
 t/renderer.t
 t/subclass.psgi
+webnano_article.html

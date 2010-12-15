@@ -3,7 +3,7 @@ use warnings;
 
 package WebNano::Controller;
 BEGIN {
-  $WebNano::Controller::VERSION = '0.004';
+  $WebNano::Controller::VERSION = '0.005';
 }
 
 use URI::Escape 'uri_unescape';
@@ -29,8 +29,7 @@ sub render {
 }
 
 sub local_dispatch {
-    my ( $self, $path, @args ) = @_;
-    my @parts = split /\//, $path;
+    my ( $self, @parts ) = @_;
     my $name = uri_unescape( shift @parts );
     $name = 'index' if !defined( $name ) || !length( $name );
     my $action;
@@ -46,7 +45,7 @@ sub local_dispatch {
     $action = $self->can( $method ) if !$action;
     my $out;
     if( $action ){
-        $out = $action->( $self, @args, @parts );
+        $out = $action->( $self, @parts );
     }
     warn 'No local action found in "' . ref($self) . qq{" for "$name"\n} if !defined( $out ) && $self->DEBUG;
     return $out;
@@ -56,7 +55,7 @@ sub handle {
     my ( $class, %args ) = @_;
     my $path = delete $args{path};
     my $self = $class->new( %args );
-    return $self->local_dispatch( $path );
+    return $self->local_dispatch( @$path );
 };
 
 1;
@@ -71,7 +70,7 @@ WebNano::Controller - WebNano Controller
 
 =head1 VERSION
 
-version 0.004
+version 0.005
 
 =head1 DESCRIPTION
 

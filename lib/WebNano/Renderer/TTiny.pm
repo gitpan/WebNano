@@ -1,6 +1,6 @@
 package WebNano::Renderer::TTiny;
 BEGIN {
-  $WebNano::Renderer::TTiny::VERSION = '0.004';
+  $WebNano::Renderer::TTiny::VERSION = '0.005';
 }
 use strict;
 use warnings;
@@ -101,7 +101,7 @@ WebNano::Renderer::TTiny - Dynamic search paths for Template::Tiny
 
 =head1 VERSION
 
-version 0.004
+version 0.005
 
 =head1 SYNOPSIS
 

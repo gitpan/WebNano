@@ -38,7 +38,7 @@ my %WriteMakefileArgs = (
     'Template::Tiny' => '0',
     'URI::Escape' => '0'
   },
-  'VERSION' => '0.004',
+  'VERSION' => '0.005',
   'test' => {
     'TESTS' => 't/*.t'
   }

@@ -1,0 +1,11 @@
+--- lib/WebNano.pm
++++ lib/WebNano.pm
+@@ -304,7 +303,7 @@
+ 
+ =head2 DEBUG
+ 
+-If set prints out some debugging information to stdout.  By default checks if 
++If set prints out some debugging information to stdout.  By default checks if
+ C<$ENV{PLACK_ENV} eq 'development'>.
+ 
+ =head1 DIAGNOSTICS

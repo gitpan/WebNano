@@ -3,7 +3,7 @@ use warnings;
 
 package WebNano::DirController;
 BEGIN {
-  $WebNano::DirController::VERSION = '0.004';
+  $WebNano::DirController::VERSION = '0.005';
 }
 use WebNano::FindController 'find_nested';
 use base 'WebNano::Controller';
@@ -20,9 +20,9 @@ sub handle {
     my ( $class, %args ) = @_;
     my $path = delete $args{path};
     my $self = $class->new( %args );
-    my $out = $self->local_dispatch( $path );
-    return $out if defined($out);
-    my( $path_part, $new_path ) = ( $path =~ qr{^([^/]*)/?(.*)} );
+    my $out = $self->local_dispatch( @$path );
+    return $out if defined( $out );
+    my $path_part = shift @$path;
     $path_part =~ s/::|'//g if defined( $path_part );
     return if !length( $path_part );
     my $controller_class = find_nested( $class->_self_path . $path_part, $args{app}->controller_search_path );
@@ -33,7 +33,7 @@ sub handle {
     warn qq{Dispatching to "$controller_class"\n} if $self->DEBUG;
     return $controller_class->handle(
         %args,
-        path => $new_path,  
+        path => $path,
         self_url  => $args{self_url} . $path_part . '/',
     );
 }
@@ -55,7 +55,7 @@ WebNano::DirController - WebNano controller class for root
 
 =head1 VERSION
 
-version 0.004
+version 0.005
 
 =head1 SYNOPSIS
 

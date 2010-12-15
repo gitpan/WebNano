@@ -3,7 +3,7 @@ use warnings;
 
 package WebNano::FindController;
 BEGIN {
-  $WebNano::FindController::VERSION = '0.004';
+  $WebNano::FindController::VERSION = '0.005';
 }
 
 use Exporter 'import';
@@ -43,7 +43,7 @@ WebNano::FindController - Tool for finding controller classes
 
 =head1 VERSION
 
-version 0.004
+version 0.005
 
 =head2 find_nested
 
