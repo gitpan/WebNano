@@ -3,7 +3,7 @@ use warnings;
 
 package WebNano;
 BEGIN {
-  $WebNano::VERSION = '0.005';
+  $WebNano::VERSION = '0.006';
 }
 
 use WebNano::FindController 'find_nested';
@@ -16,6 +16,15 @@ use Encode;
 sub DEBUG { return defined( $ENV{PLACK_ENV} ) && $ENV{PLACK_ENV} eq 'development'; }
 
 sub psgi_callback {
+    my $self = shift;
+
+    warn 'psgi_callback is DEPRECATED!  Use psgi_app instead';
+    sub {
+        $self->handle( shift );
+    };
+}
+
+sub psgi_app {
     my $self = shift;
 
     sub {
@@ -70,7 +79,7 @@ WebNano - A minimalistic PSGI based web framework.
 
 =head1 VERSION
 
-version 0.005
+version 0.006
 
 =head1 SYNOPSIS
 
@@ -95,17 +104,17 @@ app.psgi file like this:
     }
     
     my $app = MyApp->new();
-    $app->psgi_callback;
+    $app->psgi_app;
 
-You can then run it with C<plackup> (see L<http://search.cpan.org/dist/Plack/scripts/plackup>).
+You can then run it with L<plackup>.
 A more practical approach is to split this into three different files.
 
 =head1 DESCRIPTION
 
 Every WebNano application has at least three parts - the application
 class, at least one controller class and the
-L<app.psgi|http://search.cpan.org/~miyagawa/Plack/scripts/plackup> file (or
-something else that uses L<http://search.cpan.org/dist/Plack/lib/Plack/Runner.pm>
+L<app.psgi|plackup> file (or
+something else that uses L<Plack::Runner>
 run the app).
 
 The application object is instantiated only once and is used to hold all the
@@ -207,9 +216,9 @@ For example to use sessions you can add following line to your app.psgi file:
     enable 'session'
 
 Read
-L<http://search.cpan.org/dist/Plack-Middleware-Session/lib/Plack/Middleware/Session.pm>
+L<Plack::Middleware::Session>
 about the additional options that you can enable here.  See also
-L<http://search.cpan.org/dist/Plack/lib/Plack/Builder.pm>
+L<Plack::Builder>
 to read about the sweetened syntax you can use in your app.psgi file
 and  L<http://search.cpan.org/search?query=Plack+Middleware&mode=all>
 to find out what other Plack::Middleware packages are available.
@@ -218,7 +227,7 @@ The same goes for MVC. WebNano does not have any methods or attributes for
 models, not because I don't structure my web application using the 'web MVC'
 pattern - but rather because I don't see any universal attribute or method of
 the possible models.  Users are free to add their own methods.  For example most
-of my code uses L<http://search.cpan.org/dist/DBIx-Class/lib/DBIx/Class.pm>
+of my code uses L<DBIx::Class>
 - and I add these lines to my application:
 
     has schema => ( is => 'ro', isa => 'DBIx::Class::Schema', lazy_build => 1 );
@@ -243,32 +252,12 @@ returns a string.
 
 =head3 Streaming
 
-You can use the original L<http://search.cpan.org/dist/PSGI/PSGI.pod#Delayed_Reponse_and_Streaming_Body>
+You can use the original L<PSGI/Delayed_Reponse_and_Streaming_Body>
 The streaming_action method in F<t/lib/MyApp/Controller.pm> can be used as an example.
 
 =head3 Authentication
 
-Example code in the application class:
-
-    around handle => sub {
-        my $orig = shift;
-        my $self = shift;
-        my $env  = shift;
-        if( $env->{'psgix.session'}{user_id} ){
-            $env->{user} = $self->schema->resultset( 'User' )->find( $env->{'psgix.session'}{user_id} );
-        }
-        else{
-            my $req = Plack::Request->new( $env );
-            if( $req->param( 'username' ) && $req->param( 'password' ) ){
-                my $user = $self->schema->resultset( 'User' )->search( { username => $req->param( 'username' ) } )->first;
-                if( $user && $user->check_password( $req->param( 'password' ) ) ){
-                    $env->{user} = $user;
-                    $env->{'psgix.session'}{user_id} = $user->id;
-                }
-            }
-        }
-        $self->$orig( $env, @_ );
-    };
+https://github.com/zby/Plack-Middleware-Auth-Form soon on CPAN.
 
 =head3 Authorization
 
@@ -290,10 +279,14 @@ C<MyApp::Controller::Admin::User>) would be guarded agains unauthorized usage.
 
 =head1 ATTRIBUTES and METHODS
 
-=head2 psgi_callback
+=head2 psgi_app
 
 This is a method which returns a subroutine reference suitable for PSGI.
 The returned subrourine ref is a closure over the application object.
+
+=head2 psgi_callback
+
+This method is deprecated - use psgi_app instead.
 
 =head2 controller_search_path
 
@@ -361,7 +354,7 @@ This software is Copyright (c) 2010 by Zbigniew Lukasiak <zby@cpan.org>.
 
 This is free software, licensed under:
 
-  The Artistic License 2.0
+  The Artistic License 2.0 (GPL Compatible)
 
 =cut
 

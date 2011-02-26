@@ -3,7 +3,7 @@ use warnings;
 
 package WebNano::DirController;
 BEGIN {
-  $WebNano::DirController::VERSION = '0.005';
+  $WebNano::DirController::VERSION = '0.006';
 }
 use WebNano::FindController 'find_nested';
 use base 'WebNano::Controller';
@@ -55,7 +55,7 @@ WebNano::DirController - WebNano controller class for root
 
 =head1 VERSION
 
-version 0.005
+version 0.006
 
 =head1 SYNOPSIS
 
@@ -107,7 +107,7 @@ This software is Copyright (c) 2010 by Zbigniew Lukasiak <zby@cpan.org>.
 
 This is free software, licensed under:
 
-  The Artistic License 2.0
+  The Artistic License 2.0 (GPL Compatible)
 
 =cut
 

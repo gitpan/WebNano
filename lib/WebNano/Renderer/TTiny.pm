@@ -1,6 +1,6 @@
 package WebNano::Renderer::TTiny;
 BEGIN {
-  $WebNano::Renderer::TTiny::VERSION = '0.005';
+  $WebNano::Renderer::TTiny::VERSION = '0.006';
 }
 use strict;
 use warnings;
@@ -101,7 +101,7 @@ WebNano::Renderer::TTiny - Dynamic search paths for Template::Tiny
 
 =head1 VERSION
 
-version 0.005
+version 0.006
 
 =head1 SYNOPSIS
 
@@ -117,8 +117,7 @@ in MyApp::Controller:
 
 =head1 DESCRIPTION
 
-This is a wrapper around
-L<Template::Tiny|http://search.cpan.org/~adamk/Template-Tiny/lib/Template/Tiny.pm>
+This is a wrapper around L<Template::Tiny>
 - 'Template Toolkit reimplemented in as little code as possible'.
 
 The only public method here is render - it expects as input a hash with the
@@ -181,7 +180,7 @@ This software is Copyright (c) 2010 by Zbigniew Lukasiak <zby@cpan.org>.
 
 This is free software, licensed under:
 
-  The Artistic License 2.0
+  The Artistic License 2.0 (GPL Compatible)
 
 =cut
 
