@@ -4,7 +4,7 @@ use warnings;
 
 
 
-use ExtUtils::MakeMaker 6.31;
+use ExtUtils::MakeMaker 6.30;
 
 
 
@@ -20,7 +20,7 @@ my %WriteMakefileArgs = (
     'Test::More' => '0'
   },
   'CONFIGURE_REQUIRES' => {
-    'ExtUtils::MakeMaker' => '6.31'
+    'ExtUtils::MakeMaker' => '6.30'
   },
   'DISTNAME' => 'WebNano',
   'EXE_FILES' => [],
@@ -32,13 +32,13 @@ my %WriteMakefileArgs = (
     'Exporter' => '0',
     'File::Spec' => '0',
     'Object::Tiny::RW' => '0',
-    'Plack::Request' => '0',
-    'Plack::Response' => '0',
+    'Plack::Request' => '0.9967',
+    'Plack::Response' => '0.9967',
     'Scalar::Util' => '0',
     'Template::Tiny' => '0',
     'URI::Escape' => '0'
   },
-  'VERSION' => '0.006',
+  'VERSION' => '0.007',
   'test' => {
     'TESTS' => 't/*.t'
   }

@@ -10,9 +10,9 @@ build_requires:
   Plack::Test: 0
   Test::More: 0
 configure_requires:
-  ExtUtils::MakeMaker: 6.31
+  ExtUtils::MakeMaker: 6.30
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.200004, CPAN::Meta::Converter version 2.110240'
+generated_by: 'Dist::Zilla version 4.200006, CPAN::Meta::Converter version 2.110930001'
 license: artistic_2
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -29,11 +29,11 @@ requires:
   Exporter: 0
   File::Spec: 0
   Object::Tiny::RW: 0
-  Plack::Request: 0
-  Plack::Response: 0
+  Plack::Request: 0.9967
+  Plack::Response: 0.9967
   Scalar::Util: 0
   Template::Tiny: 0
   URI::Escape: 0
 resources:
   repository: http://github.com/zby/WebNano
-version: 0.006
+version: 0.007

@@ -19,6 +19,11 @@ test_psgi(
         $res = $cb->(GET "/mapped url");
         like( $res->content, qr/This is the mapped url page/ );
 
+        $res = $cb->(GET "/postonly");
+        is( $res->code, 404 , 'GET for a POST controller' );
+        $res = $cb->(POST "/postonly");
+        like( $res->content, qr/This is a method with _POST postfix/ );
+
         $res = $cb->(GET "NestedController/some_method");
         like( $res->content, qr/This is a method with _action postfix/ );
         $res = $cb->(GET "NestedController/safe_method");
@@ -27,6 +32,8 @@ test_psgi(
         like( $res->content, qr/This is a NestedController page rendered with a template/ );
         $res = $cb->(GET "NestedController/self_url");
         like( $res->content, qr{^/NestedController/$}, 'self_url' );
+        $res = $cb->(GET "NestedController/env_check");
+        like( $res->content, qr{^env present$}, 'env_check' );
 
         $res = $cb->(GET "NestedController2/some_method");
         like( $res->content, qr/This is a method with _action postfix in MyApp::Controller::NestedController2/ );
@@ -51,8 +58,7 @@ test_psgi(
         is( $res->code, 404 , '404 for non existing controller' );
         $res = $cb->(GET "/ThisIsNotController/");
         is( $res->code, 404 , '404 for a non controller' );
-        $res = $cb->(GET "/streaming?who=zby");
-        like( $res->content, qr/Hello, zby/ );
+
         $res = $cb->(GET "/DoesNotCompile/");
         is( $res->code, 500, '500 for controller that does not compile' );
 #        in some circumstances the above code dies instead of issuing a 500
@@ -61,5 +67,18 @@ test_psgi(
         is( $res->content, "This is 'some_action' in 'MyApp::Controller::Deep::Nested'" );
      } 
 );
+
+SKIP: {
+    skip '$Plack::Test::Impl ne "MockHTTP" - streaming might be not implemented', 1 if $Plack::Test::Impl ne 'MockHTTP';
+    test_psgi( 
+        app => MyApp->new()->psgi_app, 
+        client => sub {
+            my $cb = shift;
+            my $res = $cb->(GET "/streaming?who=zby");
+            like( $res->content, qr/Hello, zby/ );
+        }
+    );
+}
+
 
 done_testing();

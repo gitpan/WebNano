@@ -3,7 +3,7 @@ use warnings;
 
 package WebNano;
 BEGIN {
-  $WebNano::VERSION = '0.006';
+  $WebNano::VERSION = '0.007';
 }
 
 use WebNano::FindController 'find_nested';
@@ -79,7 +79,7 @@ WebNano - A minimalistic PSGI based web framework.
 
 =head1 VERSION
 
-version 0.006
+version 0.007
 
 =head1 SYNOPSIS
 
@@ -123,20 +123,21 @@ renderer object (if it is too heavy to be created per request) and general
 stuff that is too heavy to be rebuilt with each request.  In contrast the
 controller objects are recreated for each request.
 
-The dispatching implemented by WebNano is a simple namespace matching
+The dispatching implemented by L<WebNano::Controller> is a simple namespace matching
 of HTTP request paths into method calls as in the following examples:
 
     '/page' -> 'MyApp::Controller->page_action()'
     '/Some/Very/long/pa/th' -> 'MyApp::Controller::Some::Very->long_action( 'pa', 'th' )
 
-The first type of dispatching is done by the plain L<WebNano::Controller> - to get actions
-dispatched to controllers in subdirs you need to subclass L<WebNano::DirController>
-(which is also a subclass of C<WebNano::Controller>).
-Your root controllers should usually start with C<use base 'WebNano::DirController'>.
-Other controllers also can subclass C<WebNano::DirController> - but only if they
+The dispatching to methods inside a controller is always available - to get actions
+dispatched to controllers in subdirs you need to override the C<search_subcontrollers>
+method and make it return a true value: C<sub search_subcontrollers { 1 }>.
+Usually in your root controller should do that.
+Other controllers also can do it as well - but only if they
 do not do their own dispatching to sub-controllers.  If a controller has custom
-dispatching then you should use C<WebNano::Controller> to avoid intruducing possible
-security risks from the automatic dispatching which could bypass your controller's logic.
+dispatching then you should leave the default C<search_subcontrollers> to avoid 
+intruducing possible security risks from the automatic dispatching which could 
+bypass your controller's logic.
 
 Additionally if the last part of the path is empty then C<index> is added to it - so C</> is
 mapped to C<index_action> and C</SomeController/> is mapped to
@@ -155,10 +156,10 @@ More advanced dispatching can be done by overriding the C<local_dispatch> method
 the Controller class:
 
     around 'local_dispatch' => sub {
-        my( $orig, $self, @path) = @_;
-        my( $id, $method, @args ) = @path;
+        my( $orig, $self ) = @_;
+        my( $id, $method, @args ) = @{ $self->path };
         $method ||= 'view';
-        if( $id && $id =~ /^\d+$/ && $self->is_record_method( $method ) ){
+        if( $id && $id =~ /^\d+$/ && $self->record_methods->{ $method } ){
             my $rs = $self->app->schema->resultset( 'Dvd' );
             my $record = $rs->find( $id );
             if( ! $record ) {
@@ -169,7 +170,7 @@ the Controller class:
             }
             return $self->$method( $record, @args );
         }
-        return $self->$orig( @path );
+        return $self->$orig();
     };
 
 This example checks if the first part of the path is a number - if it is it uses
@@ -180,16 +181,13 @@ Note the need to check if the called method is an allowed one.
 If the first part of the url is not a number - then the request is dispatched in
 the normal way.
 
+More examples you can find in the C<examples> subdir.
+
 The primary design goal here is to provide basic functionality that should cover most
 use cases and offer a easy way to override and extend it for special cases.
 In general it is easy to write your own dispatcher that work for your limited use
 case - and here you just need to do that, you can override the dispatching only for a
 particular controller and you don't need to warry about the general cases.
-
-The example in F<extensions/WebNano-Controller-DSL/> shows how to create a DSL
-for dispatching (ala Dancer):
-
-    get '/some_address' => sub { 'This is some_address in web_dispatch table' };
 
 =head2 Controller object live in the request scope (new controller per request)
 

@@ -3,7 +3,9 @@ use warnings;
 
 package MyApp::Controller;
 
-use base 'WebNano::DirController';
+use base 'WebNano::Controller';
+
+sub search_subcontrollers { 1 }
 
 sub new {
     my $class = shift;
@@ -33,6 +35,8 @@ sub streaming_action {
         $writer->close();
     }
 }
+
+sub postonly_POST { 'This is a method with _POST postfix' }
 
 1;
 
